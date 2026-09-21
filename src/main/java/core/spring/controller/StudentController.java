@@ -1,7 +1,7 @@
-package core.spring.crudSpringBootDemo.controller;
+package core.spring.controller;
 
-import core.spring.crudSpringBootDemo.StudentService;
-import core.spring.crudSpringBootDemo.entitiy.Student;
+import core.spring.StudentService;
+import core.spring.entitiy.Student;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;

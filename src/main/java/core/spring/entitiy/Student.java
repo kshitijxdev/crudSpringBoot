@@ -1,4 +1,4 @@
-package core.spring.crudSpringBootDemo.entitiy;
+package core.spring.entitiy;
 
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
@@ -17,6 +17,8 @@ public class Student {
     private int rollNo;
     private String subject;
     private Boolean deleted;
+    private String createdAt;
+    private String updatedAt;
 
     public Boolean getDeleted() {
         return deleted;

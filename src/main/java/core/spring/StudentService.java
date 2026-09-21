@@ -1,7 +1,8 @@
-package core.spring.crudSpringBootDemo;
+package core.spring;
 
-import core.spring.crudSpringBootDemo.entitiy.Student;
-import core.spring.crudSpringBootDemo.repository.StudentRepository;
+import core.spring.dto.RequestDto;
+import core.spring.entitiy.Student;
+import core.spring.repository.StudentRepository;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
@@ -16,9 +17,8 @@ public class StudentService {
         this.studentRepository=studentRepository;
     }
 
-    public Student createStudent(Student studentReq){
-        studentReq.setDeleted(false);
-        Student studentResponse = studentRepository.save(studentReq);
+    public Student createStudent(RequestDto studentReq){
+        RequestDto studentResponse = studentRepository.save(studentReq);
 
         return studentResponse;
     }

@@ -1,6 +1,6 @@
-package core.spring.crudSpringBootDemo.repository;
+package core.spring.repository;
 
-import core.spring.crudSpringBootDemo.entitiy.Student;
+import core.spring.entitiy.Student;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.stereotype.Repository;
 
