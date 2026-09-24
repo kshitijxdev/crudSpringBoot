@@ -1,7 +1,12 @@
 package core.spring.controller;
 
 import core.spring.StudentService;
+import core.spring.dto.CreateStudentRequestDto;
+import core.spring.dto.UpdateStudentRequestDto;
+import core.spring.dto.UpdateStudentResponseDto;
 import core.spring.entitiy.Student;
+import core.spring.dto.CreateStudentResponseDto;
+import jakarta.validation.Valid;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
@@ -18,68 +23,49 @@ public class StudentController {
         this.studentService=studentService;
     }
 
-    @PostMapping("/create")
-    public ResponseEntity<Student> createStudent(@RequestBody Student student){
+    @PostMapping
+    public ResponseEntity<CreateStudentResponseDto> createStudent(@Valid @RequestBody CreateStudentRequestDto studentRequestDto){
 
-        Student createdStudent = studentService.createStudent(student);
+        CreateStudentResponseDto createdStudent = studentService.createStudent(studentRequestDto);
 
         return ResponseEntity.status(HttpStatus.CREATED).body(createdStudent);
 
     }
 
-    @GetMapping("/get")
-    public ResponseEntity<Student> getStudent(@RequestParam Long id){
-        Student studentResp = studentService.getStudent(id);
-
-        if(studentResp==null){
-            return ResponseEntity.notFound().build();
-        }
-
+    @GetMapping("/{id}")
+    public ResponseEntity<CreateStudentResponseDto> getStudent(@PathVariable Long id){
+        CreateStudentResponseDto studentResp = studentService.getStudent(id);
         return ResponseEntity.ok(studentResp);
     }
 
-    @GetMapping("/getAll")
+    @GetMapping
     public ResponseEntity<List<Student>> getAllStudent(){
         List<Student> studentList = studentService.getAllStudent();
 
-        if(studentList.isEmpty()){
-            return ResponseEntity.notFound().build();
-        }
         return ResponseEntity.ok(studentList);
     }
 
-    @PutMapping("/update")
-    public ResponseEntity<Student> updateStudent(@RequestParam Long id,
-                                                 @RequestBody Student studentReq){
-        Student studentResp= studentService.updateStudent(id,studentReq);
+    @PutMapping
+    public ResponseEntity<UpdateStudentResponseDto> updateStudent(@RequestParam Long id,
+                                                                          @RequestBody UpdateStudentRequestDto updateStudentReqDto){
+        UpdateStudentResponseDto updateStudentRespDto=
+                studentService.updateStudent(id,updateStudentReqDto);
 
-        if(studentResp==null){
-            return ResponseEntity.notFound().build();
-        }
-        return ResponseEntity.ok(studentResp);
+        return ResponseEntity.ok(updateStudentRespDto);
     }
 
-    @DeleteMapping("/delete")
+    @DeleteMapping
     public ResponseEntity<String> deleteStudent(@RequestParam Long id){
-        Boolean isDeleted = studentService.deleteStudent(id);
+        studentService.deleteStudent(id);
 
-        if(!isDeleted){
-            return ResponseEntity.notFound().build();
-        }
-
-        return ResponseEntity.ok().body("Record Deleted");
+        return ResponseEntity.status(HttpStatus.NO_CONTENT).build();
     }
 
     @PatchMapping("/delete-soft")
     public ResponseEntity<String> deleteStudentSoftly(@RequestParam Long id){
 
-        Boolean isDeleted = studentService.deleteStudentSoftly(id);
-
-        if(!isDeleted){
-            return ResponseEntity.notFound().build();
-        }
-
-        return ResponseEntity.ok().body("Record Deleted");
+        studentService.deleteStudentSoftly(id);
+        return ResponseEntity.noContent().build();
     }
 
 }
